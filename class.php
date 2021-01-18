@@ -85,15 +85,36 @@ class ImpiegatoAOre extends Impiegato
 
 }
 
-class ImpiegatoSuCommissione extends Impiegato
+trait Progetto
 {
 
-  function __construct($name, $lastname, $f_c, $empl_code)
-  {
-    parent::__construct($name, $lastname, $f_c, $empl_code);
-  }
+    protected $nome_progetto;
+    protected $commissione_progetto;
 
 }
 
+class ImpiegatoSuCommissione extends Impiegato
+{
+
+  use Progetto;
+
+  function __construct($name, $lastname, $f_c, $empl_code, $p_name, $p_com)
+  {
+    parent::__construct($name, $lastname, $f_c, $empl_code);
+    $this->nome_progetto = $p_name;
+    $this->commissione_progetto = $p_com;
+  }
+
+  public function calcola_compenso()
+  {
+    return $this->commissione_progetto;
+  }
+
+  public function to_string()
+  {
+    echo 'Nome: '.$this->nome.'</br>Cognome: '.$this->cognome.'</br>Codice fiscale: '.$this->codice_fiscale.'</br>Codice impiegato: '.$this->codice_impiegato.'</br>Compenso: '.$this->calcola_compenso().'</br>Nome Progetto: '.$this->nome_progetto;
+  }
+
+}
 
 ?>
